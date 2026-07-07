@@ -1,0 +1,233 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  /* cosmic accents */
+  --color-cyan: var(--cyan);
+  --color-magenta: var(--magenta);
+  --color-violet: var(--violet);
+  --color-gold: var(--gold);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  color-scheme: light;
+
+  --background: #fff7ed; /* Soft, warm light orange cream */
+  --foreground: #3b1803; /* Dark warm brown for high readability */
+
+  --card: #ffedd5; /* Warm light orange card background */
+  --card-foreground: #451a03;
+
+  --popover: #ffedd5;
+  --popover-foreground: #451a03;
+
+  --primary: #ea580c; /* Deep warm orange */
+  --primary-foreground: #fff7ed;
+
+  --secondary: #fed7aa; /* Soft orange/peach */
+  --secondary-foreground: #431407;
+
+  --muted: #fef3c7;
+  --muted-foreground: #78350f;
+
+  --accent: #ff8800;
+  --accent-foreground: #fff7ed;
+
+  --destructive: #dc2626;
+
+  --border: rgba(234, 88, 12, 0.15);
+  --input: rgba(234, 88, 12, 0.15);
+  --ring: #ea580c;
+
+  /* frosty neon palette */
+  --neon-blue: #ea580c;
+  --neon-teal: #f97316;
+  --neon-white: #431407;
+  --neon-silver: #78350f;
+
+  /* legacy aliases pointing to frosty colors so existing components render correctly */
+  --cyan: #ea580c;
+  --magenta: #f97316;
+  --violet: #d97706;
+  --gold: #3b1803;
+
+  /* warmth for glassoform */
+  --neon-gold: #ffaa00;
+  --neon-orange: #ff5500;
+
+  --chart-1: var(--neon-blue);
+  --chart-2: var(--neon-teal);
+  --chart-3: var(--neon-white);
+  --chart-4: var(--neon-silver);
+  --chart-5: #f97316;
+
+  --radius: 0.75rem;
+
+  --sidebar: #ffedd5;
+  --sidebar-foreground: #431407;
+  --sidebar-primary: #ea580c;
+  --sidebar-primary-foreground: #fff7ed;
+  --sidebar-accent: #fef3c7;
+  --sidebar-accent-foreground: #431407;
+  --sidebar-border: rgba(234, 88, 12, 0.15);
+  --sidebar-ring: #ea580c;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+@layer utilities {
+  .text-glow-blue {
+    text-shadow: 0 0 24px rgba(234, 88, 12, 0.55);
+  }
+  .text-glow-white {
+    text-shadow: 0 0 24px rgba(234, 88, 12, 0.4);
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(234, 88, 12, 0.15);
+    box-shadow: 0 4px 20px rgba(234, 88, 12, 0.05);
+  }
+  .glassoform-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+                0 8px 32px rgba(234, 88, 12, 0.08);
+  }
+  .glassoform-glow-bg {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle at 50% 50%, var(--neon-gold) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, var(--neon-orange) 0%, transparent 50%);
+    opacity: 0.15;
+    filter: blur(40px);
+    z-index: -1;
+    border-radius: inherit;
+    transition: opacity 0.5s ease;
+  }
+  .group:hover .glassoform-glow-bg {
+    opacity: 0.3;
+  }
+  .cosmic-gradient-text {
+    background: linear-gradient(
+      92deg,
+      var(--neon-blue) 0%,
+      var(--neon-teal) 45%,
+      #c2410c 75%,
+      var(--neon-silver) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .grid-fade-mask {
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 78%);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 78%);
+  }
+  .hover-neon-glow {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hover-neon-glow:hover {
+    transform: scale(1.015);
+    box-shadow: 0 0 35px rgba(234, 88, 12, 0.25);
+    border-color: rgba(234, 88, 12, 0.4);
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
