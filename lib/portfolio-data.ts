@@ -204,22 +204,42 @@ export type Achievement = {
 
 export const achievements: Achievement[] = [
   {
-    title: 'Participant',
-    event: 'India Run Hackathon 2026',
+    title: 'India Run Hackathon 2026',
+    event: 'Participant',
     placement: 'Rapid solution prototyping',
     accent: 'gold',
   },
   {
-    title: 'Participant',
-    event: 'Xebia Hackathons',
+    title: 'Xebia Hackathons',
+    event: 'Participant',
     placement: 'Completed 2 Hackathons',
     accent: 'cyan',
   },
   {
-    title: 'Active Member',
-    event: 'The NorthCap University',
+    title: 'The NorthCap University',
+    event: 'Active Member',
     placement: 'Technical & Cultural Events',
     accent: 'magenta',
+  },
+]
+
+export type ActivityItem = {
+  title: string
+  event: string
+  role: string
+  accent: 'cyan' | 'magenta' | 'violet' | 'gold'
+  link?: string
+  linkText?: string
+}
+
+export const activities: ActivityItem[] = [
+  {
+    title: 'NASA - Mother of Hubble',
+    event: 'Nancy Grace Roman Space Telescope',
+    role: 'Boarding Pass',
+    accent: 'violet',
+    link: '/boarding-pass-Nitesh-Singh.jpeg', 
+    linkText: 'Boarding Pass',
   },
 ]
 
@@ -231,5 +251,6 @@ export const navLinks = [
   { label: 'Education', href: '#education' },
   { label: 'Certifications', href: '#certifications' },
   { label: 'Achievements', href: '#achievements' },
+  { label: 'Activity', href: '#activity' },
   { label: 'Contact', href: '#contact' },
 ]

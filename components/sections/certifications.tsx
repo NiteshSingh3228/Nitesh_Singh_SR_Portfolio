@@ -38,7 +38,7 @@ export function Certifications() {
                       Certificate (Coming Soon)
                     </span>
                   ) : (
-                    <Link
+                    <a
                       href={cert.link}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -46,7 +46,7 @@ export function Certifications() {
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
                       Certificate
-                    </Link>
+                    </a>
                   )}
                 </div>
               )}

@@ -8,6 +8,7 @@ import { Experience } from '@/components/sections/experience'
 import { Education } from '@/components/sections/education'
 import { Certifications } from '@/components/sections/certifications'
 import { Achievements } from '@/components/sections/achievements'
+import { Activity } from '@/components/sections/activity'
 import { Contact } from '@/components/sections/contact'
 
 export default function Page() {
@@ -24,6 +25,7 @@ export default function Page() {
         <Education />
         <Certifications />
         <Achievements />
+        <Activity />
         <Contact />
       </main>
     </>
