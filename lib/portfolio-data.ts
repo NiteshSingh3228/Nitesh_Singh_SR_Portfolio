@@ -188,6 +188,7 @@ export type Certification = {
   issuer: string
   year: string
   link?: string
+  linkText?: string
 }
 
 export const certifications: Certification[] = [
@@ -240,6 +241,14 @@ export const activities: ActivityItem[] = [
     accent: 'violet',
     link: '/boarding-pass-Nitesh-Singh.jpeg', 
     linkText: 'Boarding Pass',
+  },
+  {
+    title: 'AI Skills Fest',
+    event: 'Microsoft Event',
+    role: 'Participant',
+    accent: 'cyan',
+    link: 'https://www.credly.com/badges/d0e05a9c-9e8b-4b41-b2e3-2d36bafd2f58', 
+    linkText: 'Badge',
   },
 ]
 

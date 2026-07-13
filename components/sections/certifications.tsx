@@ -35,7 +35,7 @@ export function Certifications() {
                   {cert.link === '#' ? (
                     <span className="flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/5 text-primary/60 px-3 py-1.5 text-xs font-semibold cursor-not-allowed">
                       <ExternalLink className="h-3.5 w-3.5" />
-                      Certificate (Coming Soon)
+                      {cert.linkText || 'Certificate'} (Coming Soon)
                     </span>
                   ) : (
                     <a
@@ -45,7 +45,7 @@ export function Certifications() {
                       className="flex items-center gap-1.5 rounded-full border border-primary text-primary px-3 py-1.5 text-xs font-semibold hover:bg-primary hover:text-primary-foreground transition-colors shadow-sm"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
-                      Certificate
+                      {cert.linkText || 'Certificate'}
                     </a>
                   )}
                 </div>
