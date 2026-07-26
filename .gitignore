@@ -1,15 +1,67 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+.tmp/
+.temp/
+tmp/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel/
+
+# Databases
+*.db
+*.sqlite
+
+# Python
+__pycache__/
+*.pyc
+
+# Certificates
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+
+# Archives
+*.zip
+*.tar
+*.gz
+
+# Local configuration
+config.local.*
+
 # v0 sandbox internal files
 __v0_runtime_loader.js
 __v0_devtools.tsx
 __v0_jsx-dev-runtime.ts
 .snowflake/
 .v0-trash/
-.vercel/
-
-# Environment variables
-.env*.local
-
-# Common ignores
-node_modules
-.next/
-.DS_Store

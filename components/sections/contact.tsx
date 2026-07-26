@@ -2,7 +2,12 @@
 
 import { profile } from '@/lib/portfolio-data'
 import { ArrowUpRight, Mail, Send, ChevronDown } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+
+let audioCtx: AudioContext | null = null;
+const FREQ_C5 = 523.25;
+const FREQ_E5 = 659.25;
+
 import { GithubIcon, InstagramIcon, LinkedinIcon, UpworkIcon } from '../brand-icons'
 import { Reveal } from '../reveal'
 import { SectionHeading } from '../section-heading'
@@ -26,7 +31,8 @@ export function Contact() {
     occupation: '',
     organization: '',
     purpose: '',
-    message: '' 
+    message: '',
+    bot_field: '' 
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [sent, setSent] = useState(false)
@@ -37,40 +43,49 @@ export function Contact() {
     setIsSubmitting(true)
     setError(null)
 
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 10000)
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
+        signal: controller.signal
       })
+      clearTimeout(timeoutId)
 
       if (!response.ok) {
-        throw new Error('Failed to send message')
+        const resData = await response.json().catch(() => ({}))
+        throw new Error(resData.error || 'Failed to send message')
       }
 
       // Play a satisfying "success" chime using Web Audio API
       try {
-        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioContext) {
-          const ctx = new AudioContext();
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (audioCtx) {
+          if (audioCtx.state === 'suspended') await audioCtx.resume();
           const playTone = (freq: number, startTime: number, duration: number) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
+            const osc = audioCtx!.createOscillator();
+            const gain = audioCtx!.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, ctx.currentTime + startTime);
-            gain.gain.setValueAtTime(0, ctx.currentTime + startTime);
-            gain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + startTime + 0.05); // Increased volume
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration);
+            osc.frequency.setValueAtTime(freq, audioCtx!.currentTime + startTime);
+            gain.gain.setValueAtTime(0, audioCtx!.currentTime + startTime);
+            gain.gain.linearRampToValueAtTime(0.8, audioCtx!.currentTime + startTime + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx!.currentTime + startTime + duration);
             osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(ctx.currentTime + startTime);
-            osc.stop(ctx.currentTime + startTime + duration);
+            gain.connect(audioCtx!.destination);
+            osc.start(audioCtx!.currentTime + startTime);
+            osc.stop(audioCtx!.currentTime + startTime + duration);
           };
-          playTone(523.25, 0, 0.2); // C5
-          playTone(659.25, 0.1, 0.4); // E5
+          playTone(FREQ_C5, 0, 0.2);
+          playTone(FREQ_E5, 0.1, 0.4);
         }
       } catch (e) {
-        // Ignore audio errors (e.g. if browser blocks auto-play)
+        // Ignore audio errors
       }
 
       // Tell the background music component to lower its volume
@@ -83,13 +98,18 @@ export function Contact() {
         occupation: '',
         organization: '',
         purpose: '',
-        message: '' 
+        message: '',
+        bot_field: ''
       })
       
       // Reset the sent status after 5 seconds
       setTimeout(() => setSent(false), 5000)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        setError('Request timed out. Please try again.')
+      } else {
+        setError(err instanceof Error ? err.message : 'Something went wrong')
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -183,6 +203,20 @@ export function Contact() {
                 />
               </div>
             </div>
+            {/* Honeypot field for anti-spam. Visually hidden but readable by bots */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px' }}>
+              <label htmlFor="bot_field">Do not fill this out if you are human</label>
+              <input
+                type="text"
+                id="bot_field"
+                name="bot_field"
+                value={form.bot_field}
+                onChange={(e) => setForm((f) => ({ ...f, bot_field: e.target.value }))}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             <div className="mt-4">
               <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
                 Message

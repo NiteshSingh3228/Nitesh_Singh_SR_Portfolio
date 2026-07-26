@@ -1,31 +1,67 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { z } from 'zod';
+import sanitizeHtml from 'sanitize-html';
 
-// Simple email validation regex
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const contactSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('A valid email is required'),
+  occupation: z.string().optional(),
+  organization: z.string().optional(),
+  purpose: z.string().optional(),
+  message: z.string().min(1, 'Message cannot be empty'),
+  bot_field: z.string().optional(),
+});
+
+// Simple in-memory rate limiter (Note: state resets on serverless cold starts)
+const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
+const RATE_LIMIT = 3;
+const WINDOW_MS = 60 * 1000; // 1 minute
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+  if (!record) {
+    rateLimitMap.set(ip, { count: 1, lastReset: now });
+    return true;
+  }
+  if (now - record.lastReset > WINDOW_MS) {
+    rateLimitMap.set(ip, { count: 1, lastReset: now });
+    return true;
+  }
+  if (record.count >= RATE_LIMIT) {
+    return false;
+  }
+  record.count += 1;
+  return true;
+}
 
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || 'unknown';
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const body = await req.json();
-    const { name, email, occupation, organization, purpose, message } = body;
-
-    // Server-side validation
-    if (!name || typeof name !== 'string' || name.trim() === '') {
-      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
-    }
-    if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email)) {
-      return NextResponse.json({ error: 'A valid email is required' }, { status: 400 });
-    }
-    if (!message || typeof message !== 'string' || message.trim() === '') {
-      return NextResponse.json({ error: 'Message cannot be empty' }, { status: 400 });
+    const result = contactSchema.safeParse(body);
+    
+    if (!result.success) {
+      const firstIssue = result.error.issues?.[0];
+      const errorMsg = firstIssue ? firstIssue.message : 'Invalid input data';
+      return NextResponse.json({ error: errorMsg }, { status: 400 });
     }
 
-    // Check if credentials exist
+    const { name, email, occupation, organization, purpose, message, bot_field } = result.data;
+
+    // Anti-spam Honeypot Check
+    if (bot_field) {
+      return NextResponse.json({ message: 'Message sent successfully' }, { status: 200 });
+    }
+
     if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
       console.warn("SMTP credentials not configured. Returning success for demonstration.");
-      // Add a slight delay to simulate network request
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
       return NextResponse.json(
         { message: 'Message "sent" successfully (SMTP not configured)' },
         { status: 200 }
@@ -33,19 +69,25 @@ export async function POST(req: Request) {
     }
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // Standard configuration for Gmail
+      service: 'gmail',
       auth: {
         user: process.env.SMTP_EMAIL,
         pass: process.env.SMTP_PASSWORD,
       },
     });
 
-    const safeName = name.trim();
-    const safeEmail = email.trim();
-    const safeOccupation = occupation?.trim() || 'Not specified';
-    const safeOrganization = organization?.trim() || 'Not specified';
-    const safePurpose = purpose?.trim() || 'Not specified';
-    const safeMessage = message.trim().replace(/\n/g, '<br/>');
+    const sanitizeOpts = { allowedTags: [], allowedAttributes: {} };
+    const safeName = sanitizeHtml(name.trim(), sanitizeOpts);
+    const safeEmail = sanitizeHtml(email.trim(), sanitizeOpts);
+    const safeOccupation = sanitizeHtml(occupation?.trim() || 'Not specified', sanitizeOpts);
+    const safeOrganization = sanitizeHtml(organization?.trim() || 'Not specified', sanitizeOpts);
+    const safePurpose = sanitizeHtml(purpose?.trim() || 'Not specified', sanitizeOpts);
+    
+    let safeMessage = sanitizeHtml(message.trim(), { 
+      allowedTags: ['b', 'i', 'em', 'strong', 'br'],
+      allowedAttributes: {}
+    });
+    safeMessage = safeMessage.replace(/\n/g, '<br/>');
 
     const htmlContent = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-w-2xl; margin: 0 auto; padding: 20px; background-color: #f9f9f9; color: #333;">
@@ -91,7 +133,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: process.env.SMTP_EMAIL,
-      to: process.env.SMTP_EMAIL, // Send to yourself
+      to: process.env.SMTP_EMAIL,
       replyTo: safeEmail,
       subject: `Portfolio Inquiry from ${safeName}`,
       html: htmlContent,

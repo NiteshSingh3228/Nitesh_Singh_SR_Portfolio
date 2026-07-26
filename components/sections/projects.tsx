@@ -1,7 +1,7 @@
 import { projects } from '@/lib/portfolio-data'
 import { accentBorder, accentText } from '@/lib/accent'
 import { cn } from '@/lib/utils'
-import { ArrowUpRight, Plus } from 'lucide-react'
+import { ArrowUpRight, Plus, Code, ExternalLink } from 'lucide-react'
 import { Reveal } from '../reveal'
 import { SectionHeading } from '../section-heading'
 
@@ -18,16 +18,11 @@ export function Projects() {
       <div className="grid grid-cols-1 md:grid-cols-6 auto-rows-[minmax(180px,auto)] gap-5">
         {projects.map((project, i) => {
           
-          let gridClass = 'md:col-span-2 md:row-span-1'
-          if (i === 0) gridClass = 'md:col-span-3 md:row-span-2'
-          else if (i === 1 || i === 2) gridClass = 'md:col-span-3 md:row-span-1'
+          let gridClass = 'md:col-span-3 md:row-span-1'
 
           return (
             <Reveal key={project.title} delay={(i % 2) * 100} className={gridClass}>
-              <a
-                href={project.link ?? '#'}
-                target={project.link ? '_blank' : undefined}
-                rel={project.link ? 'noopener noreferrer' : undefined}
+            <div
                 className={cn(
                   'group glass relative flex h-full flex-col overflow-hidden rounded-3xl p-6 transition-all hover-neon-glow flex flex-col justify-between',
                   accentBorder[project.accent],
@@ -43,7 +38,18 @@ export function Projects() {
                     >
                       {project.category}
                     </span>
-                    <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                    <div className="flex items-center gap-3">
+                      {project.link && (
+                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 z-10" title="Source Code">
+                          <Code className="h-5 w-5" />
+                        </a>
+                      )}
+                      {project.demoLink && (
+                        <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 z-10" title="Live Demo">
+                          <ExternalLink className="h-5 w-5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
 
                   <h3 className="mt-3 font-display text-2xl font-bold tracking-tight">
@@ -64,13 +70,13 @@ export function Projects() {
                     </span>
                   ))}
                 </div>
-              </a>
+              </div>
             </Reveal>
           )
         })}
 
         {/* Coming Soon Box */}
-        <Reveal delay={(projects.length % 2) * 100} className="md:col-span-4 md:row-span-1">
+        <Reveal delay={(projects.length % 2) * 100} className="md:col-span-6 md:row-span-1">
           <div className="border border-dashed border-primary/30 bg-primary/5 flex h-full flex-col justify-center rounded-3xl p-6 min-h-[180px]">
             <div className="flex items-start gap-4">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">

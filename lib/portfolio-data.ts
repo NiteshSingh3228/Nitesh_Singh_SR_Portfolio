@@ -62,6 +62,7 @@ export type Project = {
   tags: string[]
   accent: 'cyan' | 'magenta' | 'violet' | 'gold'
   link?: string
+  demoLink?: string
 }
 
 export const projects: Project[] = [
@@ -73,6 +74,7 @@ export const projects: Project[] = [
     tags: ['Python', 'Jupyter Notebook', 'Machine Learning', 'Random Forest'],
     accent: 'cyan',
     link: 'https://github.com/NiteshSingh3228/Earthquake_Damage_Prediction_System',
+    demoLink: 'https://earthquake-damage-prediction-system.vercel.app/',
   },
   {
     title: 'HireMind AI',

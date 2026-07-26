@@ -106,6 +106,7 @@ function HeroCrystal() {
   }), [])
 
   useFrame((state, delta) => {
+    if (document.hidden) return;
     if (meshRef.current) {
       meshRef.current.rotation.y += velocity.current.x
       meshRef.current.rotation.x += velocity.current.y
@@ -171,6 +172,7 @@ function GlassProjectCards() {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (document.hidden) return;
     if (groupRef.current) {
       const children = groupRef.current.children
       for (let i = 0; i < children.length; i++) {
@@ -395,6 +397,7 @@ function DustParticles({ scrollSpeedRef, hoverActiveRef }: DustParticlesProps) {
   const hoverTargetVal = useRef(0)
 
   useFrame((state, delta) => {
+    if (document.hidden) return;
     if (ref.current) {
       ref.current.rotation.y += delta * 0.03
 
@@ -427,6 +430,7 @@ function GodRays() {
   const group = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if (document.hidden) return;
     if (group.current) {
       group.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.2) * 0.02
       group.current.rotation.y = Math.cos(state.clock.elapsedTime * 0.1) * 0.015
@@ -470,6 +474,7 @@ function CameraRig({ scrollProgressRef, scrollSpeedRef, pointerParallaxRef }: Ca
   const currentLook = useRef(new THREE.Vector3(0, 0, 0))
 
   useFrame((_, delta) => {
+    if (document.hidden) return;
     // Decay scroll speed ref
     if (scrollSpeedRef.current !== undefined) {
       scrollSpeedRef.current = THREE.MathUtils.lerp(scrollSpeedRef.current, 0, delta * 3.0)
