@@ -124,7 +124,7 @@ export const experiences: Experience[] = [
     description:
       'Working on real-world ML projects, building practical skills, and contributing meaningfully to the team. Focus on developing models and applications in a practical environment.',
     tags: ['Machine Learning', 'Python'],
-    certificate: '#',
+    certificate: '/Certificate.pdf',
     project: 'https://github.com/NiteshSingh3228',
     offerLetter: '/offer-letter-prodigy.pdf'
   },
@@ -135,7 +135,7 @@ export const experiences: Experience[] = [
     description:
       'Performing data cleaning, statistical analysis, and creating visualizations using Python to extract valuable insights from large datasets and drive informed decision-making.',
     tags: ['Data Analysis', 'Python', 'Visualization'],
-    certificate: '#',
+    certificate: '/Nitesh Singh.pdf',
     project: 'https://github.com/NiteshSingh3228',
     offerLetter: '/offer-letter-cognifyz.pdf'
   },
@@ -146,8 +146,8 @@ export const experiences: Experience[] = [
     description:
       'Performing data cleaning, EDA, and building interactive Power BI dashboards. Applying data transformation and outlier detection across end-to-end analytics workflows.',
     tags: ['Python', 'Excel', 'Power BI', 'Tableau'],
-    certificate: '#',
-    project: 'https://github.com/NiteshSingh3228',
+    certificate: '/Certificate_INTERN261809_Nitesh Singh.pdf',
+    project: 'https://drive.google.com/drive/folders/1iSLtnavuUZZAGTJWKhj4QV6cJ3ZSCmNe',
     offerLetter: '/offer-letter-3skill.pdf'
   },
   {
@@ -241,7 +241,7 @@ export const activities: ActivityItem[] = [
     event: 'Nancy Grace Roman Space Telescope',
     role: 'Boarding Pass',
     accent: 'violet',
-    link: '/boarding-pass-Nitesh-Singh.jpeg', 
+    link: '/boarding-pass-Nitesh-Singh.jpeg',
     linkText: 'Boarding Pass',
   },
   {
@@ -249,7 +249,7 @@ export const activities: ActivityItem[] = [
     event: 'Microsoft Event',
     role: 'Participant',
     accent: 'cyan',
-    link: 'https://www.credly.com/badges/d0e05a9c-9e8b-4b41-b2e3-2d36bafd2f58', 
+    link: 'https://www.credly.com/badges/d0e05a9c-9e8b-4b41-b2e3-2d36bafd2f58',
     linkText: 'Badge',
   },
 ]
