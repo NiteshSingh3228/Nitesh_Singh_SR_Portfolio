@@ -1,57 +1,44 @@
-import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
-import { BackgroundMusic } from '@/components/background-music'
-import { ScrollToTop } from '@/components/scroll-to-top'
-import { Preloader } from '@/components/preloader'
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-sans',
   display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-mono',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Nitesh Singh — Developer & Creative Technologist',
-  description:
-    'A deep-universe portfolio exploring software, AI, design, and creative engineering — projects, experience, hackathons, and more.',
+  title: 'Nitesh Singh | Data Analytics & Machine Learning',
+  description: 'Computer Science undergraduate with hands-on experience in full-stack ML systems, predictive modeling, and data visualization.',
   keywords: [
     'Nitesh Singh',
     'portfolio',
     'developer',
-    'software engineer',
-    'AI',
     'machine learning',
     'data analytics',
-    'creative technologist',
-    '3D',
-    'WebGL',
   ],
   openGraph: {
-    title: 'Nitesh Singh — Developer & Creative Technologist',
-    description:
-      'A deep-universe portfolio exploring software, AI, design, and creative engineering.',
+    title: 'Nitesh Singh | Data Analytics & Machine Learning',
+    description: 'Computer Science undergraduate with hands-on experience in full-stack ML systems, predictive modeling, and data visualization.',
     type: 'website',
-    // Add your deployed URL here when ready, e.g. 'https://niteshsingh.dev'
-    // url: 'https://your-domain.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nitesh Singh — Developer & Creative Technologist',
-    description: 'A deep-universe portfolio exploring software, AI, design, and creative engineering.',
+    title: 'Nitesh Singh | Data Analytics & Machine Learning',
+    description: 'Computer Science undergraduate with hands-on experience in full-stack ML systems, predictive modeling, and data visualization.',
   },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#fff7ed',
+  themeColor: '#F3F0FA',
   width: 'device-width',
   initialScale: 1,
 }
@@ -62,13 +49,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
-      <body className="font-sans antialiased">
-        <Preloader />
-        <ScrollToTop />
+    <html lang="en" className={`scroll-smooth ${plusJakartaSans.variable} ${jetBrainsMono.variable}`}>
+      <body className="relative min-h-screen selection:bg-[#DDD4F8] selection:text-[#121217] font-sans">
         {children}
-        <BackgroundMusic />
-        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )

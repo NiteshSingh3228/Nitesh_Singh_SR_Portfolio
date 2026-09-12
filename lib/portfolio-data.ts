@@ -5,6 +5,7 @@ export const profile = {
     'Computer Science undergraduate with hands-on experience in full-stack ML systems, predictive modeling, and data visualization. Currently building applied analytics skills to solve real-world business problems.',
   location: 'Gurugram, India',
   email: 'niteshsinghsrajput1205@gmail.com',
+  resumeUrl: '/Nitesh_Singh.pdf',
   socials: {
     github: 'https://github.com/NiteshSingh3228',
     linkedin: 'https://www.linkedin.com/in/nitesh-singh-25a8b2321',
@@ -128,17 +129,8 @@ export const experiences: Experience[] = [
     project: 'https://github.com/NiteshSingh3228',
     offerLetter: '/offer-letter-prodigy.pdf'
   },
-  {
-    role: 'Data Analysis Intern',
-    company: 'Cognifyz IT Solutions Pvt. Ltd.',
-    period: 'Jul 2026',
-    description:
-      'Performing data cleaning, statistical analysis, and creating visualizations using Python to extract valuable insights from large datasets and drive informed decision-making.',
-    tags: ['Data Analysis', 'Python', 'Visualization'],
-    certificate: '/Nitesh Singh.pdf',
-    project: 'https://github.com/NiteshSingh3228',
-    offerLetter: '/offer-letter-cognifyz.pdf'
-  },
+
+
   {
     role: 'Data Analytics Intern',
     company: '3Skill | Remote',
@@ -157,7 +149,6 @@ export const experiences: Experience[] = [
     description:
       'Selected to promote entrepreneurship and innovation on campus, supporting E-Cell initiatives and outreach within the startup ecosystem.',
     tags: ['Leadership', 'Outreach'],
-    certificate: '#',
     offerLetter: '/Nitesh Singh_offer_letter.png'
   },
 ]
@@ -203,6 +194,7 @@ export type Achievement = {
   event: string
   placement: string
   accent: 'cyan' | 'magenta' | 'violet' | 'gold'
+  certificate?: string
 }
 
 export const achievements: Achievement[] = [
@@ -223,6 +215,13 @@ export const achievements: Achievement[] = [
     event: 'Active Member',
     placement: 'Technical & Cultural Events',
     accent: 'magenta',
+  },
+  {
+    title: 'Orchestrate - Global Hackathon',
+    event: 'Participant',
+    placement: 'August 2026 edition - Global Hackathon',
+    accent: 'gold',
+    certificate: '/28893388_image.png',
   },
 ]
 

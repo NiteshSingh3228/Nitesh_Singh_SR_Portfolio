@@ -93,7 +93,7 @@ export async function POST(req: Request) {
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-w-2xl; margin: 0 auto; padding: 20px; background-color: #f9f9f9; color: #333;">
         <div style="background-color: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
           <h2 style="margin-top: 0; color: #111; font-size: 24px; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;">
-            New Portfolio Transmission 🚀
+            New Portfolio Inquiry
           </h2>
           
           <table style="width: 100%; border-collapse: collapse; margin: 25px 0;">
