@@ -134,7 +134,7 @@ export const experiences: Experience[] = [
   {
     role: 'Data Analytics Intern',
     company: '3Skill | Remote',
-    period: 'Jun 2026 — Present',
+    period: 'Jun 2026 — Aug 2026',
     description:
       'Performing data cleaning, EDA, and building interactive Power BI dashboards. Applying data transformation and outlier detection across end-to-end analytics workflows.',
     tags: ['Python', 'Excel', 'Power BI', 'Tableau'],
